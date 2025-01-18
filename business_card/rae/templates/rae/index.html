@@ -1,0 +1,14 @@
+{% extends 'rae/base.html' %}
+{% load static %}
+
+
+{% block title %}Wybierz czynność{% endblock %}
+
+{% block content %}
+    <div class="register-or-login">
+        <p>Nie mam konta -> <a href="{% url "register" %}">rejestracja</a></p>
+    </div>
+    <div class="register-or-login">
+        <p>Mam już konto -> <a href="{% url "login" %}">logowanie</a></p>
+    </div>
+{% endblock %}

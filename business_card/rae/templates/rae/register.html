@@ -1,0 +1,15 @@
+{% extends 'rae/base.html' %}
+{% load static %}
+
+
+{% block title %}Zarejestruj się{% endblock %}
+
+{% block content %}
+    <div class="form-div">
+        <form method="post" class="form-field">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Utwórz użytkownika">
+        </form>
+    </div>
+{% endblock %}

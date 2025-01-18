@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <title>Business card</title>
+    </head>
+
+    <body>
+        <header>
+            <div class="header-txt">
+                {% block title %}{% endblock %}
+            </div>
+        </header>
+
+        {% for message in messages %}
+            <div>{{ message | safe }}</div>
+        {% endfor %}
+
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
