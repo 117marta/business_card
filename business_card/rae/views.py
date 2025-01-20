@@ -1,14 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 
 from rae.forms import BusinessCardForm, LoginForm, RegisterForm
-from rae.models import BusinessCard
 from rae.helpers import generate_qr
+from rae.models import BusinessCard
 
 
 def index(request):
-    return render(request, 'rae/index.html')
+    return render(request, "rae/index.html")
 
 
 def register_view(request):
@@ -46,7 +46,9 @@ def login_view(request):
 
 
 def generate_data(request):
-    form = BusinessCardForm(request.POST or None, files=request.FILES or None, instance=request.user)
+    form = BusinessCardForm(
+        request.POST or None, files=request.FILES or None, instance=request.user
+    )
 
     if request.method == "POST":
         if form.is_valid():

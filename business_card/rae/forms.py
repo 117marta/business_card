@@ -4,8 +4,8 @@ from rae.models import BusinessCard
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Login')
-    password = forms.CharField(label='Hasło', widget=forms.PasswordInput)
+    username = forms.CharField(label="Login")
+    password = forms.CharField(label="Hasło", widget=forms.PasswordInput)
 
 
 class RegisterForm(LoginForm):
@@ -21,7 +21,9 @@ class BusinessCardForm(forms.ModelForm):
         url = self.cleaned_data["url"]
         if BusinessCard.objects.filter(url=url).exists():
             suggested_url = f"{url}_{self.instance.pk}"
-            raise forms.ValidationError(f"Podany adres już istnieje. Wybierz inną nazwę, np. {suggested_url}")
+            raise forms.ValidationError(
+                f"Podany adres już istnieje. Wybierz inną nazwę, np. {suggested_url}"
+            )
         url_name = url.replace(" ", "").lower()
         url = f"https://card.ceremeo.pl/{url_name}"
         return url
