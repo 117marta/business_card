@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from rae.views import index, register_view, login_view, generate_data
+from rae.views import index, register_view, login_view, generate_data, display_data
 
 
 urlpatterns = [
@@ -28,4 +28,5 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('generate-data/', generate_data, name='generate-data'),
+    path('display-data/', display_data, name='display-data'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

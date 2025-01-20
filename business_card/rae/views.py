@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from rae.forms import BusinessCardForm, LoginForm, RegisterForm
 from rae.models import BusinessCard
+from rae.helpers import generate_qr
 
 
 def index(request):
@@ -50,9 +51,15 @@ def generate_data(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            # QR
-            return redirect("index")
+            return redirect("display-data")
         else:
             messages.error(request, "Błędy w formularzu.")
 
     return render(request, "rae/generate_data.html", {"form": form})
+
+
+def display_data(request):
+    business_card = get_object_or_404(BusinessCard, pk=request.user.pk)
+    url = business_card.url
+    qr = generate_qr(url)
+    return render(request, "rae/display_data.html", {"url": url, "qr": qr})

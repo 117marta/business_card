@@ -1,0 +1,24 @@
+{% extends 'rae/base.html' %}
+{% load static %}
+
+
+{% block header %}Oto twoje dane{% endblock %}
+
+{% block content %}
+    <div>
+        <div>Kod QR - <a href="{{ qr }}" download>pobierz</a></div>
+        <img src="{{ qr }}" alt="QR">
+    </div>
+    <div>
+        <div>Adres URL - <button onclick="copyText()">copy</button></div>
+        <div id="url">{{ url }}</div>
+
+    </div>
+
+    <script>
+    const copyText = () => {
+        const txt = document.getElementById("url").innerHTML;
+        navigator.clipboard.writeText(txt);
+    }
+    </script>
+{% endblock %}
