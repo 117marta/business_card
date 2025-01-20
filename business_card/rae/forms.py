@@ -7,6 +7,13 @@ class LoginForm(forms.Form):
     username = forms.CharField(label="Login")
     password = forms.CharField(label="Hasło", widget=forms.PasswordInput)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["placeholder"] = field.label
+            field.label = False
+            field.widget.attrs["class"] = "custom-field"
+
 
 class RegisterForm(LoginForm):
     def clean_username(self):
@@ -31,12 +38,44 @@ class BusinessCardForm(forms.ModelForm):
     class Meta:
         model = BusinessCard
         fields = ("name", "company", "phone", "email", "photo", "url")
+        labels = {
+            "name": False,
+            "company": False,
+            "phone": False,
+            "email": False,
+            "photo": False,
+            "url": False,
+        }
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": "Twoje imię i nazwisko", "class": "custom-field"}
+            ),
+            "company": forms.TextInput(
+                attrs={"placeholder": "Nazwa firmy", "class": "custom-field"}
+            ),
+            "phone": forms.TextInput(
+                attrs={"placeholder": "Numer telefonu", "class": "custom-field"}
+            ),
+            "email": forms.TextInput(
+                attrs={"placeholder": "Adres e-mail", "class": "custom-field"}
+            ),
+            "photo": forms.FileInput(
+                attrs={
+                    "placeholder": "Zdjęcie (najlepiej kwadrat)",
+                    "class": "custom-field",
+                }
+            ),
+            "url": forms.TextInput(
+                attrs={"placeholder": "Adres vcard", "class": "custom-field"}
+            ),
+        }
 
 
 class LPStep1Form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["phone"].label = False
+        self.fields["phone"].widget.attrs.update({"class": "custom-field"})
         self.fields["phone"].widget.attrs[
             "placeholder"
         ] = "Wpisz swój numer telefonu..."

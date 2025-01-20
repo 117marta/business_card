@@ -12,3 +12,59 @@ header {
     display: block;
     margin: 0 auto;
 }
+
+.form-div {
+    margin-left: 15px;
+    width: 80%;
+}
+
+.custom-field {
+    padding: 10px;
+    border-radius: 5px;
+    background: whitesmoke;
+    border: 1px solid lightgrey;
+    width: 100%;
+}
+
+.button-green {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid green;
+    background: lightgreen;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    box-sizing: content-box;
+    text-transform: uppercase;
+}
+
+.button-green:hover {
+    transition: background-color 0.5s ease;
+    filter: brightness(85%);
+}
+
+.button-blue {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid blue;
+    background: lightblue;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    box-sizing: content-box;
+    text-transform: uppercase;
+}
+
+.button-blue:hover {
+    transition: background-color 0.5s ease;
+    filter: brightness(85%);
+}
+
+.display-url {
+    padding: 10px;
+    margin: 10px 5px;
+    border-radius: 5px;
+    background: whitesmoke;
+    border: 1px solid lightgrey;
+    width: 50%;
+}
