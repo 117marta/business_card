@@ -173,3 +173,8 @@ cython_debug/
 
 # Other
 .idea/*
+*.iml
+
+### Django ###
+*.pyc
+media
