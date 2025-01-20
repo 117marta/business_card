@@ -1,0 +1,18 @@
+{% extends 'rae/base.html' %}
+{% load static %}
+
+
+{% block title %}Wpisz dane by wygenerować QR i URL{% endblock %}
+
+{% block content %}
+    <div>
+        Konfig wizytówki
+    </div>
+    <div class="form-div">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Dalej">
+        </form>
+    </div>
+{% endblock %}

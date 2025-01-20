@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 
-from rae.forms import LoginForm, RegisterForm
+from rae.forms import BusinessCardForm, LoginForm, RegisterForm
 from rae.models import BusinessCard
 
 
@@ -35,10 +35,24 @@ def login_view(request):
             password = form.cleaned_data.get("password")
             if business_card := authenticate(username=username, password=password):
                 login(request, business_card)
-                messages.success(request, "Zalogowano! Wypełnij dane.")
+                return redirect("generate-data")
             else:
                 messages.error(request, "Nieprawidłowy login lub hasło.")
         else:
             messages.error(request, "Błędy w formularzu.")
 
     return render(request, "rae/login.html", {"form": form})
+
+
+def generate_data(request):
+    form = BusinessCardForm(request.POST or None, files=request.FILES or None, instance=request.user)
+
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            # QR
+            return redirect("index")
+        else:
+            messages.error(request, "Błędy w formularzu.")
+
+    return render(request, "rae/generate_data.html", {"form": form})

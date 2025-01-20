@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('company', models.CharField(max_length=128)),
                 ('phone', models.CharField(max_length=32)),
                 ('photo', models.ImageField(blank=True, upload_to='photos/')),
-                ('url', models.URLField()),
+                ('url', models.CharField(max_length=256)),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
             ],
