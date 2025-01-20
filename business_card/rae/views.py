@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, redirect, render
 
-from rae.forms import BusinessCardForm, LoginForm, RegisterForm
+from rae.forms import BusinessCardForm, LoginForm, LPStep1Form, RegisterForm
 from rae.helpers import generate_qr
 from rae.models import BusinessCard
 
@@ -65,3 +65,15 @@ def display_data(request):
     url = business_card.url
     qr = generate_qr(url)
     return render(request, "rae/display_data.html", {"url": url, "qr": qr})
+
+
+def lp_step1(request, url):
+    business_card = get_object_or_404(BusinessCard, url=url)
+    form = LPStep1Form(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            return redirect("index")
+    return render(
+        request, "rae/lp_step1.html", {"business_card": business_card, "form": form}
+    )

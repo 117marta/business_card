@@ -31,3 +31,16 @@ class BusinessCardForm(forms.ModelForm):
     class Meta:
         model = BusinessCard
         fields = ("name", "company", "phone", "email", "photo", "url")
+
+
+class LPStep1Form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["phone"].label = False
+        self.fields["phone"].widget.attrs[
+            "placeholder"
+        ] = "Wpisz swój numer telefonu..."
+
+    class Meta:
+        model = BusinessCard
+        fields = ("phone",)
