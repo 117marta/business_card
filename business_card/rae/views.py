@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from rae.forms import BusinessCardForm, LoginForm, LPStep1Form, RegisterForm
@@ -29,6 +30,7 @@ def register_view(request):
 
 def login_view(request):
     form = LoginForm(request.POST or None)
+    next_page = request.GET.get("next")
 
     if request.method == "POST":
         if form.is_valid():
@@ -36,7 +38,10 @@ def login_view(request):
             password = form.cleaned_data.get("password")
             if business_card := authenticate(username=username, password=password):
                 login(request, business_card)
-                return redirect("generate-data")
+                if next_page:
+                    return redirect(next_page)
+                else:
+                    return redirect("generate-data")
             else:
                 messages.error(request, "Nieprawidłowy login lub hasło.")
         else:
@@ -45,6 +50,7 @@ def login_view(request):
     return render(request, "rae/login.html", {"form": form})
 
 
+@login_required
 def generate_data(request):
     form = BusinessCardForm(
         request.POST or None, files=request.FILES or None, instance=request.user
@@ -60,6 +66,7 @@ def generate_data(request):
     return render(request, "rae/generate_data.html", {"form": form})
 
 
+@login_required
 def display_data(request):
     business_card = get_object_or_404(BusinessCard, pk=request.user.pk)
     url = business_card.url

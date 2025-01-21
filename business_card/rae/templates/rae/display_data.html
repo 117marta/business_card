@@ -5,15 +5,21 @@
 {% block header %}Oto twoje dane{% endblock %}
 
 {% block content %}
-    <div>
-        <div class="main-div">Kod QR - <a href="{{ qr }}" download>pobierz</a></div>
-        <img src="{{ qr }}" alt="QR">
-    </div>
-    <div>
-        <div class="main-div">Adres URL - <button onclick="copyText()">copy</button></div>
-        <div class="display-url" id="url">{{ url }}</div>
+    {% if url %}
+        <div>
+            <div class="main-div">Kod QR - <a href="{{ qr }}" download>pobierz</a></div>
+            <img src="{{ qr }}" alt="QR">
+        </div>
+        <div>
+            <div class="main-div">Adres URL - <button onclick="copyText()">copy</button></div>
+            <div class="display-url" id="url">{{ url }}</div>
 
-    </div>
+        </div>
+    {% else %}
+        <div class="main-div">
+            Najpierw uzupełnij dane, aby móc wygenerować kod QR - <a href="{% url "generate-data" %}">uzupełnij</a>
+        </div>
+    {% endif %}
 
     <script>
         const copyText = () => {
