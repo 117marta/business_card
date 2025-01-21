@@ -136,4 +136,8 @@ AUTH_USER_MODEL = 'rae.BusinessCard'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 LOGIN_URL = "login"
+
+
+CEREMEO_API_KEY = "ceremeo_12345"

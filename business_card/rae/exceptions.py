@@ -1,0 +1,2 @@
+class CeremeoException(Exception):
+    pass

@@ -13,8 +13,10 @@ from rae.forms import (
     Step2Form,
     Step3Form,
 )
-from rae.helpers import generate_qr
+from rae.helpers import generate_qr, send_data_to_ceremeo
 from rae.models import BusinessCard
+
+URL = "https://url_systemu/api/v1/lead/"
 
 
 def index(request):
@@ -116,6 +118,7 @@ class LPMultistepView(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         form_data_dict = self.get_all_cleaned_data()
+        send_data_to_ceremeo(payload=form_data_dict, url=URL)
         return redirect("lp-step4")
 
 
