@@ -6,11 +6,11 @@
 
 {% block content %}
     <div>
-        <div>Kod QR - <a href="{{ qr }}" download>pobierz</a></div>
+        <div class="main-div">Kod QR - <a href="{{ qr }}" download>pobierz</a></div>
         <img src="{{ qr }}" alt="QR">
     </div>
     <div>
-        <div>Adres URL - <button onclick="copyText()">copy</button></div>
+        <div class="main-div">Adres URL - <button onclick="copyText()">copy</button></div>
         <div class="display-url" id="url">{{ url }}</div>
 
     </div>

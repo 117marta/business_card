@@ -55,7 +55,7 @@ header {
     text-transform: uppercase;
 }
 
-.button-blue:hover {
+.button-blue:hover, .btn:hover {
     transition: background-color 0.5s ease;
     filter: brightness(85%);
 }
@@ -67,4 +67,34 @@ header {
     background: whitesmoke;
     border: 1px solid lightgrey;
     width: 50%;
+}
+
+.main-div {
+    margin: 20px 0;
+}
+
+.minor-div {
+    color: grey;
+    margin: 20px 0;
+}
+
+.btn-group {
+    padding: 7px;
+    place-items: center;
+}
+
+#btn-not-ok {
+    background-color: rgb(117, 200, 225);
+    margin-right: 20px;
+}
+
+#btn-ok {
+    background-color: rgb(163, 209, 172);
+}
+
+.btn {
+    padding: 10px 15px;
+    text-transform: uppercase;
+    width: 200px;
+    border-radius: 5px;
 }

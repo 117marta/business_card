@@ -1,0 +1,18 @@
+{% extends 'rae/base.html' %}
+{% load static %}
+
+
+{% block header %}W kontakcie!{% endblock %}
+
+{% block content %}
+    <div class="main-div">Dzięki za przekazanie kontaktu, mój otrzymasz do 5 minut. Do usłyszenia!</div>
+
+    <div><img src="{{ mem }}" alt="mem"></div>
+
+    <div class="minor-div">Tak, to ten mem! Jest ok?</div>
+    <div class="btn-group">
+        <button class="btn" id="btn-not-ok" onclick="location = self.location.href;">nie ok</button>
+        <button class="btn" id="btn-ok">ok</button>
+    </div>
+
+{% endblock %}

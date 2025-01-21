@@ -77,3 +77,8 @@ def lp_step1(request, url):
     return render(
         request, "rae/lp_step1.html", {"business_card": business_card, "form": form}
     )
+
+
+def lp_step4(request):
+    mem = "https://picsum.photos/600/400"
+    return render(request, "rae/lp_step4.html", {"mem": mem})
