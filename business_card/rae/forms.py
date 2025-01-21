@@ -71,20 +71,6 @@ class BusinessCardForm(forms.ModelForm):
         }
 
 
-class LPStep1Form(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["phone"].label = False
-        self.fields["phone"].widget.attrs.update({"class": "custom-field"})
-        self.fields["phone"].widget.attrs[
-            "placeholder"
-        ] = "Wpisz swój numer telefonu..."
-
-    class Meta:
-        model = BusinessCard
-        fields = ("phone",)
-
-
 class Step1Form(forms.Form):
     phone = forms.CharField(
         label=False,

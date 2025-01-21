@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,6 @@ from formtools.wizard.views import SessionWizardView
 from rae.forms import (
     BusinessCardForm,
     LoginForm,
-    LPStep1Form,
     RegisterForm,
     Step1Form,
     Step2Form,
@@ -85,18 +85,6 @@ def display_data(request):
     return render(request, "rae/display_data.html", {"url": url, "qr": qr})
 
 
-def lp_step1(request, url):
-    business_card = get_object_or_404(BusinessCard, url=url)
-    form = LPStep1Form(request.POST or None)
-
-    if request.method == "POST":
-        if form.is_valid():
-            return redirect("index")
-    return render(
-        request, "rae/lp_step1.html", {"business_card": business_card, "form": form}
-    )
-
-
 class LPMultistepView(SessionWizardView):
     TEMPLATES = {
         "0": "rae/lp_multistep1.html",
@@ -116,9 +104,17 @@ class LPMultistepView(SessionWizardView):
             context.update({"business_card": business_card})
         return context
 
+    def get_next_step(self, step=None):
+        all_cleaned_data = self.get_all_cleaned_data()
+        if settings.SEND_TO_CEREMEO:
+            send_data_to_ceremeo(payload=all_cleaned_data, url=URL)
+        return super().get_next_step(step)
+
+
     def done(self, form_list, **kwargs):
         form_data_dict = self.get_all_cleaned_data()
-        send_data_to_ceremeo(payload=form_data_dict, url=URL)
+        if settings.SEND_TO_CEREMEO:
+            send_data_to_ceremeo(payload=form_data_dict, url=URL)
         return redirect("lp-step4")
 
 

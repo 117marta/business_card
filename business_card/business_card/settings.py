@@ -141,3 +141,4 @@ LOGIN_URL = "login"
 
 
 CEREMEO_API_KEY = "ceremeo_12345"
+SEND_TO_CEREMEO = False

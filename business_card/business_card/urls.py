@@ -9,7 +9,6 @@ from rae.views import (
     generate_data,
     index,
     login_view,
-    lp_step1,
     lp_step4,
     register_view,
 )
@@ -21,7 +20,6 @@ urlpatterns = [
     path("login/", login_view, name="login"),
     path("generate-data/", generate_data, name="generate-data"),
     path("display-data/", display_data, name="display-data"),
-    path("lp-step1/<str:url>/", lp_step1, name="lp-step1"),
-    path("lp-step4/", lp_step4, name="lp-step4"),
     path("lp-multistep/<str:url>/", LPMultistepView.as_view(), name="lp-multistep"),
+    path("lp-step4/", lp_step4, name="lp-step4"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
