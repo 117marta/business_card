@@ -1,0 +1,32 @@
+{% extends 'rae/base.html' %}
+{% load static %}
+{{ wizard.form.media }}
+
+
+{% block header %}Aaa... i jeszcze jedno{% endblock %}
+
+{% block content %}
+    <div class="main-div">
+        Jeżeli chciałbyś, żebym zadzwonił konkretnego dnia, godzinie lub w temacie, to napisz! Dzięki!
+    </div>
+
+    <div>
+        <form action="" method="post" class="form-field">
+            {% csrf_token %}
+            {{ wizard.management_form }}
+            {% if wizard.form.forms %}
+                {{ wizard.form.management_form }}
+                {% for form in wizard.form.forms %}
+                    {{ form.as_p }}
+                {% endfor %}
+            {% else %}
+                {{ wizard.form }}
+            {% endif %}
+
+            <input class="button-green" type="submit" value="wyślij">
+        </form>
+    </div>
+
+    <div class="minor-div">Teraz już na pewno będzie mem! :)</div>
+
+{% endblock %}

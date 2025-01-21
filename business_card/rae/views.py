@@ -2,8 +2,17 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from formtools.wizard.views import SessionWizardView
 
-from rae.forms import BusinessCardForm, LoginForm, LPStep1Form, RegisterForm
+from rae.forms import (
+    BusinessCardForm,
+    LoginForm,
+    LPStep1Form,
+    RegisterForm,
+    Step1Form,
+    Step2Form,
+    Step3Form,
+)
 from rae.helpers import generate_qr
 from rae.models import BusinessCard
 
@@ -84,6 +93,30 @@ def lp_step1(request, url):
     return render(
         request, "rae/lp_step1.html", {"business_card": business_card, "form": form}
     )
+
+
+class LPMultistepView(SessionWizardView):
+    TEMPLATES = {
+        "0": "rae/lp_multistep1.html",
+        "1": "rae/lp_multistep2.html",
+        "2": "rae/lp_multistep3.html",
+    }
+    form_list = [Step1Form, Step2Form, Step3Form]
+
+    def get_template_names(self):
+        return [self.TEMPLATES[self.steps.current]]
+
+    def get_context_data(self, form, **kwargs):
+        context = super().get_context_data(form=form, **kwargs)
+        url = self.kwargs.get("url")
+        business_card = get_object_or_404(BusinessCard, url=url)
+        if self.steps.current == "0":
+            context.update({"business_card": business_card})
+        return context
+
+    def done(self, form_list, **kwargs):
+        form_data_dict = self.get_all_cleaned_data()
+        return redirect("lp-step4")
 
 
 def lp_step4(request):

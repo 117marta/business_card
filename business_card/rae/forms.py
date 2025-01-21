@@ -83,3 +83,59 @@ class LPStep1Form(forms.ModelForm):
     class Meta:
         model = BusinessCard
         fields = ("phone",)
+
+
+class Step1Form(forms.Form):
+    phone = forms.CharField(
+        label=False,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Wpisz swój numer telefonu...",
+                "class": "custom-field",
+            }
+        ),
+    )
+
+    def clean_phone(self):
+        phone = self.cleaned_data["phone"]
+        if len(phone) < 9:
+            raise forms.ValidationError("Za krótki numer")
+        return phone
+
+
+class Step2Form(forms.Form):
+    name = forms.CharField(
+        label=False,
+        widget=forms.TextInput(
+            attrs={"placeholder": "Twoje imię i nazwisko", "class": "custom-field"}
+        ),
+    )
+    email = forms.EmailField(
+        label=False,
+        widget=forms.TextInput(
+            attrs={"placeholder": "Adres e-mail", "class": "custom-field"}
+        ),
+    )
+    company = forms.CharField(
+        label=False,
+        widget=forms.TextInput(
+            attrs={"placeholder": "Firma/miejsce kontaktu", "class": "custom-field"}
+        ),
+    )
+
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+        if name.isdigit():
+            raise forms.ValidationError("Nie podawaj cyfr przy nazwie")
+        return name
+
+
+class Step3Form(forms.Form):
+    date = forms.CharField(
+        label=False,
+        widget=forms.TextInput(attrs={"placeholder": "Data", "class": "custom-field"}),
+    )
+    subject = forms.CharField(
+        label=False,
+        widget=forms.Textarea(attrs={"placeholder": "Temat", "class": "custom-field"}),
+    )
