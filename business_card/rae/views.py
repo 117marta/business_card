@@ -20,6 +20,9 @@ URL = "https://url_systemu/api/v1/lead/"
 
 
 def index(request):
+    """
+    Display a page where you can register or log in.
+    """
     return render(request, "rae/index.html")
 
 
@@ -63,6 +66,9 @@ def login_view(request):
 
 @login_required
 def generate_data(request):
+    """
+    Fill the data and save it to the database.
+    """
     form = BusinessCardForm(
         request.POST or None, files=request.FILES or None, instance=request.user
     )
@@ -79,6 +85,9 @@ def generate_data(request):
 
 @login_required
 def display_data(request):
+    """
+    Display the data from the database and generate a QR code.
+    """
     business_card = get_object_or_404(BusinessCard, pk=request.user.pk)
     url = business_card.url
     qr = generate_qr(url)
@@ -86,6 +95,11 @@ def display_data(request):
 
 
 class LPMultistepView(SessionWizardView):
+    """
+    A multistep form to leave your data.
+    Send data to the Ceremeo API at every step, if enabled.
+    """
+
     TEMPLATES = {
         "0": "rae/lp_multistep1.html",
         "1": "rae/lp_multistep2.html",
@@ -109,7 +123,6 @@ class LPMultistepView(SessionWizardView):
         if settings.SEND_TO_CEREMEO:
             send_data_to_ceremeo(payload=all_cleaned_data, url=URL)
         return super().get_next_step(step)
-
 
     def done(self, form_list, **kwargs):
         form_data_dict = self.get_all_cleaned_data()

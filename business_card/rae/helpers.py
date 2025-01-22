@@ -8,7 +8,10 @@ from qrcode import make
 from rae.exceptions import CeremeoException
 
 
-def generate_qr(data="tst"):
+def generate_qr(data="example data"):
+    """
+    Generate a QR code.
+    """
     buffer = BytesIO()
     qr = make(data, box_size=10)
     qr.save(buffer)
@@ -28,7 +31,9 @@ def send_data_to_ceremeo(payload, url, method="POST"):
     }
 
     try:
-        response = requests.request(method=method, url=url, json=payload, headers=headers, timeout=20)
+        response = requests.request(
+            method=method, url=url, json=payload, headers=headers, timeout=20
+        )
     except Exception as e:
         raise CeremeoException(e)
 
